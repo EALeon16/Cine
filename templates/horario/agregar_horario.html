@@ -1,0 +1,86 @@
+{% extends 'principal.html' %}
+{% block body%}
+<div class="container section small-padding">
+    <div class="form-group" >
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>
+                <div class="alert alert-danger">{{ message }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif%}
+    </div>
+    <form id="register-form" class="login" method="POST">{%csrf_token%}
+        <div class="field-wrap">
+            <br><label for="">Elija los horarios </label><br>
+            
+            <div>
+                <input type="hidden" name="external" id="external" value="0" />
+
+                <label for="">Hora de proyeccion</label>
+                <select name="hora_pelicula" id="inicioM">
+
+                    <option value="">-------Eliga una opcion--------</option>
+
+                    <option value="10:00">10:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="20:00">20:00</option>
+
+                    </option>
+                </select>
+                <label for="">Fecha de proyeccion</label>
+                <input type="date" name="fecha_pelicua" id="fecha" />
+                <label for="">Calidad de la pelicula</label>
+                <select name="calidad_pelicula" id="calidad_pelicula">
+                    
+                    <option value="">-------Eliga una opcion--------</option>
+                    <option value="2D">2D</option>
+                    <option value="2D-4K">2D-4K</option>
+                    <option value="3D">3D</option>
+                    <option value="3D-4K">3D-4K</option>
+                    </option>
+                </select>
+               <!----    
+                <label for="">Seleccione Pelicula</label>
+                <select name="pelicula" id="pelicula">
+                    
+                    <option value="">-------Eliga una opcion--------</option>
+                    {% for c in lista%}
+                    <option value="{{c.pelicula_id}}">{{c.nombre_pelicula}}</option>
+
+                    {% endfor %}
+                    </option>
+                </select>
+                ---->
+                <label for="">Seleccione la sala</label>
+                <select name="sala" id="sala">
+                    
+                    <option value="">-------Eliga una opcion--------</option>
+                    {% for c in listas%}
+                    <option value="{{c.sala_id}}">{{c.nombre_sala}}</option>
+
+                    {% endfor %}
+                    </option>
+                </select>
+
+            </div>
+        </div>
+</div>
+
+</div>
+
+
+
+
+
+<div class="form" style="text-align: right">
+    <br>
+    <a type='' id="reg" href="/" class="btn btn-danger" value="">Cancelar</a>
+    <button type='submit' id="reg" class="btn btn-success" value="submit">Registrarse</button>
+</div>
+</form>
+</div>
+{% endblock%}

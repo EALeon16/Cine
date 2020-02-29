@@ -1,0 +1,46 @@
+{% extends 'principal.html' %}
+
+{% block body%}
+<div class="modal-content">
+    <div class="form-group" >
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>
+                <div class="alert alert-danger">{{ message }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif%}
+    </div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Iniciar sesion</h4>
+    </div>
+    <div class="modal-body">
+        <!-- .................................form.............................. -->
+        <form id="f_login" method="POST" >{%csrf_token%}
+            <div class="form-group">
+            
+                {{formularioL.email}}
+                <small id="emailHelp" class="form-text text-muted">Nunca compartiremos su correo
+                    electrónico con nadie
+                    más.</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Contraseña</label>
+                {{formularioL.clave}}
+
+            </div>
+            <div style="text-align: center">
+                <button type="submit" class="btn btn-success" value="submit">Ingresar</button>
+                <span>O</span>
+                <a href="/registrarse">Registrese</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+  {% endblock %}

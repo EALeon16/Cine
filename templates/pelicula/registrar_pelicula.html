@@ -1,0 +1,104 @@
+{% extends 'principal.html' %}
+{% block body%}
+
+    <!-- Main content -->
+    <div class="container section small-padding">
+            <div class="form-group" >
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li>
+                            <div class="alert alert-danger">{{ message }}</div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif%}
+                </div>
+        <form id="register-form" class="login" method="POST" enctype="multipart/form-data">{%csrf_token%}
+
+
+
+            <div class="field-wrap">
+                <input type="hidden" value="0" id="external" name="external" />
+                <div>
+                    <label for="nombre">Nombre de la pelicula</label>
+                    <input type="text" placeholder="Nombre de la pelicula" name="nombre_pelicula" id="nombre_peli"
+                        class="login__input" />
+                </div><br>
+                <div>
+                    <label for="">Genero/s</label>
+                    <input type="text" data-role="tagsinput" placeholder="Genero/s de la pelicula" id="genero"
+                        name="genero">
+                </div><br>
+                <div>
+                    <label for="">Sinopsis</label>
+                    <input type="text" placeholder="Nombre del Director" name="sinopsis" id="sinopsis"
+                        data-role="tagsinput" value="" />
+                </div><br>
+                <div>
+                    <label for="">Clasificacion</label>
+                    <select name="clasificacion" id="clasificacion">
+                        <option value="">-------Eliga una opcion--------</option>
+                        <option value="AA">“AA” - Aptas para todo público que tengan atractivo infantil y sean
+                            comprensibles para niños menores de siete años
+                            de edad </option>
+                        <option value="A">"A" - Aptas para todo publico</option>
+                        <option value="B">"B" - Películas para adolescentes de 12 años en adelante.</option>
+                        <option value="B15">"B15" - Película no recomendable para menores de 15 años de edad.</option>
+                        <option value="C">"C" - Películas para adultos de 18 años en adelante.</option>
+                        <option value="D">"D" - Películas para adultos, con sexo explícito, lenguaje procaz o alto grado
+                            de violencia.
+                        </option>
+                    </select>
+                </div><br>
+
+               
+                <div>
+                    <label for="">Estreno</label>
+                    <select name="proyeccion" id="proyeccion">
+                        <option value="">-------Eliga una opcion--------</option>
+
+                        <option value="si">SI</option>
+                        <option value="no">NO
+                        </option>
+                    </select>
+                </div><br>
+                <div>
+                    <label for="">Fecha de lanzamiento</label>
+                    <input type="date" placeholder="" name="fechaLanzamiento" id="fecha" value="" />
+                </div><br>
+
+                <label for="">Duracion (en minutos)</label>
+                <input type="number" placeholder="Duracion de la pelucula" name="duracion" id="duracion"
+                    class="login__input" />
+            </div><br>
+            <div>
+                <label for="">Director</label>
+                <textarea placeholder="Director de le pelicula" rows="5" name="director" id="sinopsis"
+                    class="login__input"></textarea>
+            </div><br>
+                <div>
+                    <label for="">Protagonista/s</label>
+                    <input type="text" placeholder="Protagonistas de la pelicula" name="protagonistas"
+                        id="protagonistas" data-role="tagsinput" />
+                </div><br>
+                <div>
+                
+
+
+                <div>
+                <label for="">Imagen</label>
+                <input type="file" class="btn-lg btn-link " name="imagen" id="foto">
+            </div><br>
+            </div>
+
+            <div class="form" style="text-align: right">
+                <br>
+                <a href="/peliculas" class="btn btn-danger">Cancelar</a>
+                <button type='submit' id="reg" class="btn btn-success" value="submit">Registrar pelicula</button>
+            </div><br>
+        </form>
+
+    </div>
+
+{% endblock%}
