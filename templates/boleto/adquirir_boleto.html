@@ -7,111 +7,148 @@
         <div class="row blurb scrollme animateme" data-when="exit" data-from="0" data-to="1" data-opacity="0"
           data-translatey="100">
           <div class="col-md-9">
+            
   
-            <h1>Tipos de boletos disponibles</h1>
+            <h1>Tipos de boletos</h1>
           </div>
         </div>
       </div>
     </div>
   
     <script>
+     $(document).on('ready', constructor);
+     function constructor(){
+       sumar();
+       mul();
+     }
+
+     function sumar (){
+       $('#contenedorS').on('change', '#cantidad_boletoN', '#cantidad_boletoE', function(){
+         var num1 = parseInt($('#cantidad_boletoN').val());
+         var num2 = parseInt($('#cantidad_boletoE').val());
+         if(isNaN(num1)){
+           num1 = 0;
+         }
+         if(isNaN(num2)){
+           num2 = 0;
+         }
+         $('#total_boleto').val(num1+num2);
+       });
+     }
+
+       function mul (){
+       $('#contenedorS').on('change', '#cantidad_boletoN', '#cantidad_boletoE', function(){
+         var num1 = parseInt($('#cantidad_boletoN').val());
+         var num2 = parseInt($('#cantidad_boletoE').val());
+         if(isNaN(num1)){
+           num1 = 0;
+         }
+         if(isNaN(num2)){
+           num2 = 0;
+         }
+
+         var m1 = num1 * 7;
+         var m2 = num2 * 3.5;
+         $('#precio_total').val(m1+m2);
+       })
+
       
 
-      var enviatT = 0;
-      function sumarestaTotal(parEProm, parEValo) {
-        var varTotaTota = 0;
-        var varCantTota = 0;
-        var varCodiProm = '';
-        var inputs = "";
-        var sumPromo = 0;
-        var cantPromo = "";
-        var varTipoPago = "";
-        var varTempPago = "";
-        // sumo o resto los valores
-        if (parEProm != '' && parEValo != '') {
-          varValoCantProm = parseFloat($("input[name='txtCant_" + parEProm + "']").val()) + parseFloat(parEValo);
-          var varTr = '';
-          varTr = varTr + '  <td></td>';
-          varTr = varTr + '  <td></td>';
-          varTr = varTr + ' <td>' + varValoCantProm + '</td>';
-          var varTrn = '';
-          varTrn = varTrn + '  <td></td>';
-          varTrn = varTrn + '  <td></td>';
-          if (parseFloat(varValoCantProm) <= 0) {
-            $("input[name='txtCant_" + parEProm + "']").val(0);
-            $('#precio_' + parEProm).html(0);
-            tot();
-            cant()
+     }
 
-            
-          } else {
-            $("input[name='txtCant_" + parEProm + "']").val(varValoCantProm);
-            var precio = $('#txtPrec_' + parEProm).val()
-            var t = parseFloat(precio * varValoCantProm).toFixed(2);
-            $('#precio_' + parEProm).html(t);
-            
-            
-            console.log(varValoCantProm);
-            tot();
-            cant()
-            
-          }
-          function tot() {
-            var totalDeuda = 0;
-            var varTrn = '';
-            varTrn = varTrn + '  <td></td>';
-            varTrn = varTrn + '  <td></td>';
-            varTrn = varTrn + ' <td>' + totalDeuda + '</td>';
-            $(".precio").each(function () {
-              totalDeuda += parseFloat($(this).html()) || 0;
-            });
-            $('#precioTotal').html(parseFloat(totalDeuda).toFixed(2))
-            $('#preBol').val(parseFloat(totalDeuda).toFixed(2))
-            enviatT = totalDeuda;
-          }
-          function cant() {
-            var totalBoletos = 0;
-            var varTrn = '';
-            varTrn = varTrn + '  <td></td>';
-            varTrn = varTrn + '  <td></td>';
-            varTrn = varTrn + ' <td></td>';
-            varTrn = varTrn + ' <td>' + totalBoletos + '</td>';
-            $(".spinbox-input").each(function () {
-              totalBoletos += Number($(this).val());
-              
-            });
-            $("#txtCant_0003").each(function () {
-              var totalN = 0;
-              totalN += Number($(this).val());
-              console.log(totalN+"especial");
-              $('#cntBolE').val(totalN);
-              
-            });
-            $("#txtCant_0002").each(function () {
-              var totalE = 0;
-              totalE += Number($(this).val());
-              console.log(totalE+"normal");
-              $('#cntBolN').val(totalE);
-              
-            });
-            $('#cantidadTotal').html(totalBoletos)
-            $('#cantBol').val(totalBoletos)
-            
+     $(function(){
+        $("#siguiente").click(function(){
+            $("#contenedorPago").show();
+        });
+    });
 
-            
-           
-          }
+    function cardFormValidate(){
+    var cardValid = 0;
+
+    //card number validation
+    $('#card_number').validateCreditCard(function(result){
+        if(result.valid){
+            $("#card_number").removeClass('required');
+            cardValid = 1;
+        }else{
+            $("#card_number").addClass('required');
+            cardValid = 0;
         }
-      }
+    });
       
+    //card details validation
+    var cardName = $("#name_on_card").val();
+    var expMonth = $("#expiry_month").val();
+    var expYear = $("#expiry_year").val();
+    var cvv = $("#cvv").val();
+    var regName = /^[a-z ,.'-]+$/i;
+    var regMonth = /^01|02|03|04|05|06|07|08|09|10|11|12$/;
+    var regYear = /^2017|2018|2019|2020|2021|2022|2023|2024|2025|2026|2027|2028|2029|2030|2031$/;
+    var regCVV = /^[0-9]{3,3}$/;
+    if (cardValid == 0) {
+        $("#card_number").addClass('required');
+        $("#card_number").focus();
+        return false;
+    }else if (!regMonth.test(expMonth)) {
+        $("#card_number").removeClass('required');
+        $("#expiry_month").addClass('required');
+        $("#expiry_month").focus();
+        return false;
+    }else if (!regYear.test(expYear)) {
+        $("#card_number").removeClass('required');
+        $("#expiry_month").removeClass('required');
+        $("#expiry_year").addClass('required');
+        $("#expiry_year").focus();
+        return false;
+    }else if (!regCVV.test(cvv)) {
+        $("#card_number").removeClass('required');
+        $("#expiry_month").removeClass('required');
+        $("#expiry_year").removeClass('required');
+        $("#cvv").addClass('required');
+        $("#cvv").focus();
+        return false;
+    }else if (!regName.test(cardName)) {
+        $("#card_number").removeClass('required');
+        $("#expiry_month").removeClass('required');
+        $("#expiry_year").removeClass('required');
+        $("#cvv").removeClass('required');
+        $("#name_on_card").addClass('required');
+        $("#name_on_card").focus();
+        return false;
+    }else{
+        $("#card_number").removeClass('required');
+        $("#expiry_month").removeClass('required');
+        $("#expiry_year").removeClass('required');
+        $("#cvv").removeClass('required');
+        $("#name_on_card").removeClass('required');
+        return true;
+    }
+}
+$(document).ready(function() {
+    //card validation on input fields
+    $('#paymentForm input[type=text]').on('keyup',function(){
+        cardFormValidate();
+    });
+});
      
     </script>
   
     <div class="container section small-padding">
+      <div class="form-group" >
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>
+                <div class="alert alert-danger">{{ message }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif%}
+    </div>
       <div class="row">
         <div class="col-sm-12">
           <h2>Elija los tipos de Boleto que desea adquirir</h2>
-          <div class="form-group" >
+         <!-- <div class="form-group" >
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -121,11 +158,12 @@
                 {% endfor %}
             </ul>
             {% endif%}
-        </div>
+        </div>-->
+        <h3>Nro de Boletos disponibles :{{disponibles}}</h3>
   
           <input name="txtPrec_0002" id="txtPrec_0002" type="hidden" value="6.00" class="form-control input-mini ">
           <input name="txtPrec_0003" id="txtPrec_0003" type="hidden" value="3.00" class="form-control input-mini ">
-  
+          <!---
           <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="border: 0px solid #000000;">
             <tbody>
               <tr>
@@ -199,18 +237,60 @@
             </tbody>
   
           </table>
-  
+  -->
+ 
           <form id="register-form" class="login" method="POST" >{%csrf_token%}
-          <input type="text"  hidden id="preBol" name="preBol">
-          <input type="text" hidden value = ""id="cntBolN" name="cntBolN">
-          <input type="text" hidden id="cantBol" name="cantBol">
-          <input type="text" hidden id="cntBolE" name="cntBolE">
-          <div class="form" style="text-align: right">
-            <br>
-            <a type='' id="reg" href="/" class="btn btn-danger" value="">Cancelar</a>
-            <button type='submit' id="reg" class="btn btn-success" value="submit">Registrar</button>
-          </div>
+            <div class="col-md-4" id='contenedorS'>
+              <div class="form-group">
+                <label for="nombres">Cantidad de boletos (TARIFA NORMAL)</label>
+              <input type="number" min="0"  value="0" placeholder="ingrese el nombre de la sala" name="cantidad_boletoN" id="cantidad_boletoN" class="monto" required />
+              </div>
+              <div class="form-group">
+                <label for="nombres">Cantidad de boletos (TARIFA ESPECIAL 50%)</label>
+            <input type="number" min="0" value="0"  placeholder="ingrese el nombre de la sala" name="cantidad_boletoE" id="cantidad_boletoE" class="monto" required />
+              </div>
+              <div class="form-group">
+                <label for="">Cantidad Total de boletos</label>
+                <input type="text" placeholder="Asientos totales" name="total_boleto" readonly id="total_boleto" class="login__input" required /> 
+              </div>
+              <div class="form-group">
+                <label for="">Precio Total a pagar</label>
+            <input type="text" placeholder="Asientos totales" readonly name="precio_total"  id="precio_total" class="login__input" required />
+              </div>
+              <div class="form-group">
+                <a type='' id="reg" href="/" class="btn btn-danger" value="">Cancelar</a>
+                <input type="button"  id="siguiente" hidden class="btn btn-success" value="Siguiente" />
+            <button type='submit' id="reg" class="btn btn-success" value="submit"n>Registrar</button>>
+         
+              </div>
+            </div>
           </form>
+          <div class="col-md-4" id='contenedorPago' hidden>
+            <div class="form-group">
+              <form method="post" id="paymentForm">
+                <p>
+                    <label>Card number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" id="card_number" >
+                </p>
+                <p>
+                    <label>Expiry month</label>
+                    <input type="text" placeholder="MM" maxlength="5" id="expiry_month">
+                </p>
+                <p>
+                    <label>Expiry year</label>
+                    <input type="text" placeholder="YYYY" maxlength="5" id="expiry_year">
+                </p>
+                <p>
+                    <label>CVV</label>
+                    <input type="text" placeholder="123" maxlength="3" id="cvv">
+                </p>
+                <p>
+                    <label>Name on card</label>
+                    <input type="text" placeholder="Codex World" id="name_on_card">
+                </p>
+            </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

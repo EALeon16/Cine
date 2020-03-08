@@ -4,7 +4,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 
 urlpatterns = [
-    path('', views.vistaBoleto, name = 'verBoleto'),
-    
+    path('', views.verHistorial, name = 'verHistorial'),
+    path('pdfBoleto/', views.pdfBoleto),
     
 ]

@@ -32,6 +32,7 @@ urlpatterns = [
     path('registrarse/', include('apps.persona.urls')),
     path('login/', include('apps.login.urls')),
     path('logout/', include('apps.logout.urls')),
+    path('historailCompras/', include('apps.historialCompras.urls')),
     
    
     

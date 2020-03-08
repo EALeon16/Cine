@@ -28,10 +28,12 @@
 	<script>
 		$(document).ready(function() {
     $("#datepicker").datepicker({
-	dateFormat: 'dd/mm/yy',
+	dateFormat: 'yy-mm-dd',
     }).datepicker("setDate", new Date());
 });
+
    </script>
+   
 	<!--[if IE 9]>
 			<link href="css/ie9.css" rel="stylesheet">
 		<![endif]-->
@@ -100,9 +102,12 @@
 							</ul>
 						</li>
 						{% endif %}
+						{% if request.user.is_authenticated %}
+						
+						{% else %}
 						<li class="dropdown">
 							<a href="#">
-								<i data-toggle="modal" data-target="#exampleModal">Iniciar sesion</i>
+								<i data-toggle="modal" data-target="">Iniciar sesion</i>
 							</a>
 							
 							<ul class="dropdown-menu">
@@ -110,6 +115,7 @@
 								<li><a href="/registrarse">Registrase</a></li>
 							</ul>
 						</li>
+						{% endif %}
 						{% if request.user.is_staff %}
 						<li class="dropdown">
 							<a href="">Salas</a>
@@ -119,11 +125,19 @@
 						</li>
 						{% endif %}
 						{% if request.user.is_authenticated %}
+						{% if request.user.is_staff %}
+						
+						{% else %}
+						<li class="dropdown">
+							<a href="/historailCompras">Historial de Compras</a>
+							
+						</li>
+						{% endif %}
+						{% endif %}
+						{% if request.user.is_authenticated %}
 						<li class="dropdown">
 							<a href="{% url 'logout' %}">Cerrar sesion</a>
-							<ul class="dropdown-menu">
-								
-								<!--<li><a href="/cartelera/lista_horarios">Lista de cartelera</a></li>--> 
+							<ul class="dropdown-menu"> 
 							</ul>
 						</li>
 						{% endif %}
@@ -224,10 +238,21 @@
 
 		<div class="container section">
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-md-12 search">
+					<form method="GET" action="/cine">
+						<div id="custom=search=input">
+							<div class="input-group" col-md-12>
+								<input type="text" id="datepicker" name="datepicker">
+								<span class="input-group-list">
+									<i class="icon icon-search"></i>
+									<button type="submit" class="boton btn-success">Buscar</button>
+								</span>
+							</div>
+						</div>
+					</form>
 				<!--	<h2>{% now "SHORT_DATETIME_FORMAT" %}</h2>-->
-					<input type="text" id="datepicker" name="datepicker">
-
+					
+				</div>
 		<div class="container section">
 			<div class="row">
 				<div class="col-sm-12">
@@ -243,13 +268,15 @@
 							<li><a href="#sun">Sun</a></li>
 						</ul>-->
 						<div id="mon">
-								{% for c in lista%}
+								{% for c in listaB%}
 							<div class="row movie-tabs">
 								<div class="col-md-2 col-sm-3">
 									<a href="single-movie.html">
 										<img src="{{c.pelicula.imagen.url}}" alt="Movie title" />
 									</a>
 								</div>
+								<table style="width:100%">
+									<tr>
 								<div class="col-md-10 col-sm-9">
 									<span class="title">{{c.pelicula.genero}}</span>
 									<h3 class="no-underline">{{c.pelicula.nombre_pelicula}}</h3>
@@ -271,6 +298,8 @@
 										</div>
 									</div>
 								</div>
+							</tr>
+							</table>
 							</div>
 							{% endfor %}
 						</div>

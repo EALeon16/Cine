@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import FormularioPelicula
 from apps.modelo.models import Pelicula, Persona, Sala, Horario
+from django.db.models import Q
+
 
 
 def principal(request):
@@ -9,7 +11,15 @@ def principal(request):
     context = {
         'lista' : lista,
     }
-    return render(request,'principal.html', context)
+    queryset = request.GET.get("datepicker")
+    listaB = Horario.objects.all()
+    if queryset:
+        listaB = Horario.objects.filter(
+            Q(fecha_pelicua = queryset)
+
+        ).distinct()
+
+    return render(request,'principal.html', {'listaB':listaB})
 
 
 

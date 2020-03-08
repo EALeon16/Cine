@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import Q
 from .forms import FormularioHorario, FormularioHorario
 from apps.modelo.models import Horario, Pelicula, Sala
 
@@ -64,7 +65,8 @@ def agregarHorario1 (request):
     context = {
         'f': formulario_horario,
         'lista': lista,
-        'listas': listas
+        'listas': listas,
+        'peliculas':peliculas
     }
     
     return render(request,'horario/agregar_horario.html', context)
@@ -76,6 +78,17 @@ def listarHorarios(request):
     }
     return render(request,'horario/listar_horarios.html', context)
         
+
+def Search(request):
+    queryset = request.GET.get("datepicker")
+    listaB = Horario.objects.all()
+    if queryset:
+        listaB = Horario.objects.filter(
+            Q(fecha_pelicua = queryset)
+
+        ).distinct()
+    return render('principal.html')    
+
 
 
 
