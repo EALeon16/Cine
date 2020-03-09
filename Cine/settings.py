@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.boleto',
     'apps.login',
     'apps.historialCompras',
+    'apps.pdf',
 ]
 
 MIDDLEWARE = [

@@ -14,8 +14,8 @@ def registrarse(request):
         if formulario_persona.is_valid():
             datos = formulario_persona.cleaned_data
             persona = Persona ()
-            persona.is_superuser = True
-            persona.is_staff = False
+            persona.is_superuser = False
+            persona.is_staff = True
             persona.username = datos.get("username")
             persona.set_password(datos.get("password"))
             persona.first_name = datos.get("first_name")
